@@ -1,34 +1,26 @@
-const Letters = require("./letter.js");
+const Letter = require("./letter.js");
 
-let Words = function (word) {
-    this.word = word.split("");
-    this.letters = [];
-    for (let i = 0; i < word.length; i++) {
-        this.letters.push(new Letters(word[i]));
-    }
-    this.printWord = function () {
-        let word = ""
-        for (let i = 0; i < this.letters.length; i++) {
-            word += this.letters[i].guessedLetter();
-        }
-        console.log("word: ", word + "\n");
-    }
-    this.guessLetter = function (letter) {
-        for (let i = 0; i < this.letters.length; i++) {
-            if (this.letters[i].letter === letter || this.letters[i].letter === " ") {
-                this.letters[i].guessed = true;
-            }
-        }
-    }
+function Word(word) {
+  this.word = word;
+  this.letters = [];
 
+  this.makeLetters = function() {
+    let wordArr = this.word.split("");
+    wordArr.forEach(letter => {
+        let newLetter = new Letter(letter);
+      this.letters.push(newLetter);
+    }) 
+  }
+
+  this.update = function() {
+    let printedWord = ''
+    this.letters.forEach(letter => {
+      printedWord += letter.getCharacter() + " ";
+    });
+ 
+    return printedWord;
+  }
 }
 
-// let newWord = new Words("dog")
-// newWord.guessLetter("o")
-// newWord.printWord()
-// newWord.guessLetter("d")
-// newWord.printWord()
-// newWord.guessLetter("l")
-// newWord.printWord()
+module.exports = Word;
 
-module.exports = Words;
