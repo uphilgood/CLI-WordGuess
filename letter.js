@@ -2,7 +2,7 @@
 function Letter(letter) {
   this.letter = letter;
   this.isGuessed = false;
-
+  this.wrongLetter = []
   this.getCharacter = function() {
     if(!this.isGuessed) {
       return "_";
@@ -14,7 +14,7 @@ function Letter(letter) {
   this.checkLetter = function(guess) {
     if(guess === this.letter) {
       this.isGuessed = true;
-    }
+    } 
   }
 }
 

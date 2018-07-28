@@ -8,14 +8,25 @@ const wordChoices = [
     "swift", "sql"
   ];
   
+  
   let numOfGuesses;
   let pastWords;
   let word;
   let currentWord;
 
+  prompt.start();
+ 
+  //
+  // Get two properties from the user: username and email
+  //
+  prompt.get(['username', 'email'], function (err, result) {
+    console.log('Hello, ' + result.username + '! welcome to Programming word guess!');
+ 
+    initiate()
+  });
+
 function initiate() {
     pastWords = [];
-  console.log("Hello, and welcome to Programming word guess!");
   console.log("------------------------------------------");
   playGame();
 }
@@ -32,7 +43,7 @@ function playGame() {
     }
   
       word = new Words(currentWord);
-      console.log(word)
+      // console.log(word)
       word.makeLetters();
       makeGuess();
     
@@ -62,12 +73,16 @@ function playGame() {
       word.letters.forEach(letter => {
         letter.checkLetter(data.guessedLetter);
         checker.push(letter.getCharacter());
+        xxx = letter.isGuessed
+        
       });
+      
       console.log(checker.toString())
+      
       if(numOfGuesses > 0 && checker.indexOf("_") !== -1) {
         numOfGuesses--;
         if(numOfGuesses === 0) {
-          console.log("YOU RAN OUT OF GUESSES! GAME OVER.");
+          console.log("SORRY!  GAME OVER!");
           continuePrompt();
         } else {
           makeGuess();
@@ -96,10 +111,4 @@ function playGame() {
      } else console.log("Thanks for playing! See you next time!")
       });
     }
-
-
-    
-  
-
-  initiate()
  
