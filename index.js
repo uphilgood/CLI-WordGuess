@@ -1,6 +1,10 @@
 const Words = require("./word.js");
 const inquirer = require('inquirer');
 const prompt = require('prompt');
+let numOfGuesses;
+let pastWords;
+let word;
+let currentWord;
 const wordChoices = [
   "javascript", "angular", "react",
   "node", "java", "html",
@@ -8,10 +12,7 @@ const wordChoices = [
   "swift", "sql"
 ];
 
-let numOfGuesses;
-let pastWords;
-let word;
-let currentWord;
+
 
 prompt.start();
 
@@ -37,11 +38,12 @@ function playGame() {
   if (pastWords.length < wordChoices.length) {
     currentWord = getWord();
   } else {
-    // WIN CONDITION
+    // WIN
     console.log("You sure do know your programming languages!");
     continuePrompt();
   }
 
+  // create a new instance of Word constructor for the random word
   word = new Words(currentWord);
   word.makeLetters();
   makeGuess();
@@ -52,6 +54,7 @@ function playGame() {
 function getWord() {
   let random = Math.floor(Math.random() * wordChoices.length);
   let randomWord = wordChoices[random];
+  // if the random word doesnt already exist in the pastword array, else run the getWord function again
   if (pastWords.indexOf(randomWord) === -1) {
     pastWords.push(randomWord);
     return randomWord;
@@ -75,7 +78,8 @@ function makeGuess() {
       });
 
       console.log(checker.toString())
-
+      
+      // if user has guesses left and "_" exists in the checker array
       if (numOfGuesses > 0 && checker.indexOf("_") !== -1) {
         numOfGuesses--;
         if (numOfGuesses === 0) {
